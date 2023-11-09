@@ -50,11 +50,15 @@ app.put("/api/students/:id", async (req, res) => {
     const { name, location, cgpa } = req.body;
     const studentId = req.params.id;
     // console.log(name, location, cgpa);
-    const updatedStudent = await Student.findOneAndUpdate(studentId, {
-      name,
-      location,
-      cgpa,
-    });
+    const updatedStudent = await Student.findByIdAndUpdate(
+      studentId,
+      {
+        name,
+        location,
+        cgpa,
+      },
+      { new: true }
+    );
     // console.log("save successfully");
     res.status(200).json(updatedStudent);
   } catch (error) {
