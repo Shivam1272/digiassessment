@@ -31,7 +31,6 @@ app.get("/api/students", async (req, res) => {
 app.post("/api/students", async (req, res) => {
   try {
     const { name, location, cgpa } = req.body;
-    // console.log(name, location, cgpa);
     const newStudent = new Student({
       name,
       location,
