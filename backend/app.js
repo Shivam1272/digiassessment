@@ -49,7 +49,7 @@ app.put("/api/students/:id", async (req, res) => {
   try {
     const { name, location, cgpa } = req.body;
     const studentId = req.params.id;
-    // console.log(name, location, cgpa);
+    console.log(name, location, cgpa);
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
       {

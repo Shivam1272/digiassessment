@@ -15,6 +15,7 @@ const DynamicTable = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
+    setStudents([]);
     fetch("https://digiplus-assessment-service.onrender.com/api/students")
       .then((response) => response.json())
       .then((data) => setStudents(data))
