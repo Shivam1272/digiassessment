@@ -15,7 +15,7 @@ const DynamicTable = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/students")
+    fetch("https://digiplus-assessment-service.onrender.com/api/students")
       .then((response) => response.json())
       .then((data) => setStudents(data))
       .catch((error) => console.error(error));
@@ -74,7 +74,7 @@ const DynamicTable = () => {
       if (isEditing) {
         console.log(`Updating student: ${values.name}`);
       } else {
-        fetch("http://localhost:5000/api/students", {
+        fetch("https://digiplus-assessment-service.onrender.com/api/students", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -105,13 +105,16 @@ const DynamicTable = () => {
     setEditingStudent(student);
     setIsModalVisible(true);
     form.validateFields().then((values) => {
-      fetch(`http://localhost:5000/api/students/${student._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
+      fetch(
+        `https://digiplus-assessment-service.onrender.com/api/students/${student._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           if (data.student) {
@@ -133,9 +136,12 @@ const DynamicTable = () => {
 
   const handleDelete = (studentId) => {
     console.log("hello000000", studentId);
-    fetch(`http://localhost:5000/api/students/${studentId}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://digiplus-assessment-service.onrender.com/api/students/${studentId}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then(() => {
         setStudents(students.filter((student) => student._id !== studentId));
       })
