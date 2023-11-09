@@ -53,7 +53,7 @@ app.put("/api/students/:id", (req, res) => {
   Student.findByIdAndUpdate(
     studentId,
     { name, location, cgpa },
-    { new: true },
+    // { new: true },
     (err, updatedStudent) => {
       if (err) {
         // console.error(err);
