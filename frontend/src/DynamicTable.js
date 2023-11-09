@@ -131,7 +131,7 @@ const DynamicTable = () => {
         })
         .catch((error) => console.error(error));
     });
-    setIsModalVisible(false);
+    // setIsModalVisible(false);
   };
 
   const handleDelete = (studentId) => {
