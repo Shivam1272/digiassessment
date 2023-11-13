@@ -71,10 +71,9 @@ app.put("/api/students/:id", async (req, res) => {
     const studentId = req.params.id;
     const updateFields = req.body; // Assuming the request body contains the fields to update
 
-    const updatedStudent = await Student.findByIdAndUpdate(
-      studentId,
-      { $set: updateFields },
-      { new: true }
+    const updatedStudent = await Student.updateOne(
+      { _id: studentId },
+      { $set: updateFields }
     );
 
     res.status(200).json(updatedStudent);
