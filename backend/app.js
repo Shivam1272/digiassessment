@@ -45,21 +45,38 @@ app.post("/api/students", async (req, res) => {
   }
 });
 
+// app.put("/api/students/:id", async (req, res) => {
+//   try {
+//     const { name, location, cgpa } = req.body;
+//     const studentId = req.params.id;
+//     console.log(name, location, cgpa);
+//     const updatedStudent = await Student.findByIdAndUpdate(
+//       studentId,
+//       {
+//         name,
+//         location,
+//         cgpa,
+//       },
+//       { new: true }
+//     );
+//     // console.log("save successfully");
+//     res.status(200).json(updatedStudent);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
 app.put("/api/students/:id", async (req, res) => {
   try {
-    const { name, location, cgpa } = req.body;
     const studentId = req.params.id;
-    console.log(name, location, cgpa);
+    const updateFields = req.body; // Assuming the request body contains the fields to update
+
     const updatedStudent = await Student.findByIdAndUpdate(
       studentId,
-      {
-        name,
-        location,
-        cgpa,
-      },
+      { $set: updateFields },
       { new: true }
     );
-    // console.log("save successfully");
+
     res.status(200).json(updatedStudent);
   } catch (error) {
     res.status(500).json(error);
