@@ -87,7 +87,7 @@ const DynamicTable = () => {
               setStudents([...students, data.student]);
               setIsModalVisible(false);
             } else {
-              console.error(data.message);
+              console.error(data);
             }
           })
           .catch((error) => console.error(error));
@@ -126,7 +126,7 @@ const DynamicTable = () => {
             );
             setIsModalVisible(false);
           } else {
-            console.error(data.message);
+            console.error(data);
           }
         })
         .catch((error) => console.error(error));
