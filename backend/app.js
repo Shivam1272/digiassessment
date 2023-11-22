@@ -68,15 +68,17 @@ app.post("/api/students", async (req, res) => {
 
 app.put("/api/students/:id", async (req, res) => {
   try {
-    const studentId = req.params.id;
-    const updateFields = req.body; // Assuming the request body contains the fields to update
+    const query = { _id: ObjectId(req.params.id) };
+    const updateOperation = {
+      $set: req.body, // assuming req.body contains the fields to update
+    };
+    const result = await Student.updateOne(query, updateOperation);
 
-    const updatedStudent = await Student.updateOne(
-      { _id: studentId },
-      { $set: updateFields }
-    );
-
-    res.status(200).json(updatedStudent);
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ message: "Document updated successfully" });
+    } else {
+      res.status(404).json({ message: "Document not found" });
+    }
   } catch (error) {
     res.status(500).json(error);
   }
