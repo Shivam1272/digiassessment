@@ -72,8 +72,36 @@ const DynamicTable = () => {
   const handleOk = () => {
     form.validateFields().then((values) => {
       if (isEditing) {
-        console.log(`Updating student: ${values.name}`);
+        // Handle editing logic here
+        console.log("Updating student:", values);
+        fetch(
+          `https://digiplus-assessment-service.onrender.com/api/students/${editingStudent._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(values),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.student) {
+              // Update the local state with the updated student data
+              setStudents((prevStudents) =>
+                prevStudents.map((student) =>
+                  student._id === data.student._id ? data.student : student
+                )
+              );
+              setIsModalVisible(false);
+            } else {
+              console.error(data);
+            }
+          })
+          .catch((error) => console.error(error));
       } else {
+        // Handle adding logic here
+        console.log("Adding student:", values);
         fetch("https://digiplus-assessment-service.onrender.com/api/students", {
           method: "POST",
           headers: {
@@ -93,7 +121,6 @@ const DynamicTable = () => {
           .catch((error) => console.error(error));
       }
     });
-    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
@@ -101,41 +128,14 @@ const DynamicTable = () => {
   };
 
   const handleUpdate = (student) => {
-    form.setFieldsValue(student);
     setEditingStudent(student);
+    form.setFieldsValue(student);
+    setIsEditing(true);
     setIsModalVisible(true);
-    form.validateFields().then((values) => {
-      fetch(
-        `https://digiplus-assessment-service.onrender.com/api/students/${student._id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.student) {
-            // Update the local state with the updated student data
-            setStudents((prevStudents) =>
-              prevStudents.map((student) =>
-                student._id === data.student._id ? data.student : student
-              )
-            );
-            setIsModalVisible(false);
-          } else {
-            console.error(data);
-          }
-        })
-        .catch((error) => console.error(error));
-    });
-    // setIsModalVisible(false);
   };
 
   const handleDelete = (studentId) => {
-    console.log("hello000000", studentId);
+    // console.log("hello000000", studentId);
     fetch(
       `https://digiplus-assessment-service.onrender.com/api/students/${studentId}`,
       {
